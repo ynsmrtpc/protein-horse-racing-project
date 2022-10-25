@@ -1,43 +1,49 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, watch } from "vue";
 
-const props = defineProps(["horseColor", "start"]);
+const props = defineProps(["horseColor", "startRaceToggle"]);
+const emit = defineEmits(["update:btnName", "update:hiddenButton"]);
 
 const start = ref(1);
-const speed = ref(0);
+const speed = ref(Math.floor(Math.random() * 22) + 20);
 
 const speedHandler = (min, max) => {
-  speed.value = setInterval(() => {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }, 1000);
-  if (start >= 100) {
-    clearInterval(speed.value);
-  }
-  return speed.value;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-
-// const speed = computed(() => {
-//   return speedHandler(20, 40);
-// });
 
 const startHandler = () => {
   const timer = setInterval(() => {
-    start.value += 0.1;
+    start.value += 1;
     if (start.value >= 100) {
       clearInterval(timer);
     }
-  }, (100 - speed) * 2);
+  }, 100 - speed.value);
 };
-startHandler();
+
+watch(
+  () => props.startRaceToggle,
+  () => {
+    if (props.startRaceToggle) {
+      const randomSpeed = setInterval(() => {
+        speed.value = speedHandler(20, 40);
+        if (start.value >= 100) {
+          clearInterval(randomSpeed);
+          emit("update:hiddenButton", true);
+          emit("update:btnName", "YENİDEN BAŞLAT");
+        }
+      }, 3000);
+      startHandler();
+    }
+  }
+);
 </script>
 
 <template>
-  {{ speed }}
   <div class="road">
     <div class="horse" :style="{ left: start + '%' }">
       <div
         class="horse__svg"
-        :style="{ backgroundColor: props.horseColor.color }"
+        :style="{ backgroundColor: props.horseColor.color.color }"
       ></div>
 
       <small class="horse__speed">{{ speed }}</small>
@@ -84,7 +90,6 @@ startHandler();
     padding-left: 25px;
     z-index: 999;
     position: absolute;
-    width: 0px;
   }
   &__speed {
     all: initial;
