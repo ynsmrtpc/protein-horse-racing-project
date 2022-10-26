@@ -2,9 +2,13 @@
 import { ref, watch } from "vue";
 
 const props = defineProps(["horseColor", "startRaceToggle"]);
-const emit = defineEmits(["update:btnName", "update:hiddenButton"]);
+const emit = defineEmits([
+  "update:btnName",
+  "update:hiddenButton",
+  "update:road",
+]);
 
-const start = ref(1);
+const start = ref(0);
 const speed = ref(Math.floor(Math.random() * 22) + 20);
 
 const speedHandler = (min, max) => {
@@ -13,7 +17,7 @@ const speedHandler = (min, max) => {
 
 const startHandler = () => {
   const timer = setInterval(() => {
-    start.value += 1;
+    start.value += 0.1;
     if (start.value >= 100) {
       clearInterval(timer);
     }
@@ -30,9 +34,19 @@ watch(
           clearInterval(randomSpeed);
           emit("update:hiddenButton", true);
           emit("update:btnName", "YENİDEN BAŞLAT");
+          start.value = 0;
         }
       }, 3000);
       startHandler();
+    }
+  }
+);
+
+watch(
+  () => start.value,
+  () => {
+    if (start.value < 100) {
+      emit("update:road", parseInt(100 - start.value));
     }
   }
 );

@@ -2,46 +2,15 @@
 import { ref } from "vue";
 import Horse from "./components/Horse/Horse.vue";
 import Skorboard from "./components/LeaderBoard/LeaderBoard.vue";
+import { useHorsesStore } from "./stores/horses";
 
 const startRaceToggle = ref(false);
 const baslatBtn = ref("BAŞLAT");
 const hiddenButton = ref(true);
 const showCounter = ref(0);
+const road = ref(0);
 
-const horses = {
-  horse_1: {
-    name: "Kanlı Nigar",
-    color: "maroon",
-  },
-  horse_2: {
-    name: "Yüz Numaralı Adam",
-    color: "red",
-  },
-  horse_3: {
-    name: "İnek Şaban",
-    color: "blueviolet",
-  },
-  horse_4: {
-    name: "Kılıbık",
-    color: "yellow",
-  },
-  horse_5: {
-    name: "Orta Direk Şaban",
-    color: "green",
-  },
-  horse_6: {
-    name: "Bekçiler Kralı",
-    color: "fuchsia",
-  },
-  horse_7: {
-    name: "Üç Kağıtçı",
-    color: "purple",
-  },
-  horse_8: {
-    name: "Tosun Paşa",
-    color: "olive",
-  },
-};
+const horses = useHorsesStore();
 
 const startRace = () => {
   showCounter.value = 5;
@@ -56,6 +25,7 @@ const startRace = () => {
     startRaceToggle.value = true;
     showCounter.value = 0;
   }, 5000);
+  startRaceToggle.value = false;
 };
 </script>
 
@@ -63,15 +33,16 @@ const startRace = () => {
   <strong v-if="showCounter > 0">{{ showCounter }}</strong>
   <div class="wrapper">
     <div class="scoreboard">
-      <Skorboard :horseName="horses"></Skorboard>
+      <Skorboard :horseName="horses.horses"></Skorboard>
     </div>
     <div class="road">
-      <template v-for="color in horses">
+      <template v-for="color in horses.horses">
         <Horse
           :horseColor="{ color }"
           :startRaceToggle="startRaceToggle"
           v-model:btnName="baslatBtn"
           v-model:hiddenButton="hiddenButton"
+          v-model:road="road"
         ></Horse>
       </template>
       <button v-if="hiddenButton" class="startButton" @click="startRace">
@@ -79,6 +50,7 @@ const startRace = () => {
       </button>
     </div>
   </div>
+  {{ road }}
 </template>
 
 <style scoped lang="scss">
