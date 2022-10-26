@@ -3,6 +3,7 @@ import { ref } from "vue";
 import Horse from "./components/Horse/Horse.vue";
 import Skorboard from "./components/LeaderBoard/LeaderBoard.vue";
 import { useHorsesStore } from "./stores/horses";
+import TimeCounter from "./components/Counter/TimeCounter.vue";
 
 const startRaceToggle = ref(false);
 const baslatBtn = ref("BAŞLAT");
@@ -30,8 +31,9 @@ const startRace = () => {
 </script>
 
 <template>
-  <strong v-if="showCounter > 0">{{ showCounter }}</strong>
-  <div class="wrapper">
+  <h1 class="header">HORSE RACING</h1>
+  <TimeCounter v-if="showCounter > 0"></TimeCounter>
+  <div v-else class="wrapper">
     <div class="scoreboard">
       <Skorboard :horseName="horses.horses"></Skorboard>
     </div>
@@ -54,6 +56,26 @@ const startRace = () => {
 </template>
 
 <style scoped lang="scss">
+.header {
+  text-align: center;
+  margin: 1.5rem;
+  letter-spacing: 0.6rem;
+  background-image: linear-gradient(
+    to left,
+    rgba(224, 167, 92, 0.9),
+    rgba(165, 163, 168, 0.9),
+    rgba(224, 167, 92, 0.7),
+    rgba(165, 163, 168, 0.7),
+    rgba(224, 167, 92, 0.5),
+    rgba(165, 163, 168, 0.5),
+    rgba(224, 167, 92, 0.3),
+    rgba(165, 163, 168, 0.3)
+  );
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 .wrapper {
   margin-top: 1.5rem;
   display: flex;

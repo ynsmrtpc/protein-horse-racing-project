@@ -16,7 +16,6 @@ const props = defineProps(["horseName"]);
 
 <style scoped lang="scss">
 .scoreboard {
-  font-family: "Irish Grover";
   margin: 0.6rem;
   color: #6c7e6c;
 
