@@ -3,40 +3,53 @@ import { defineStore } from 'pinia';
 export const useHorsesStore = defineStore('horse', {
     state: () => {
         return {
-            horses: {
-                horse_1: {
+            horses: [
+                {
                     name: "Kanlı Nigar",
                     color: "maroon",
+                    road: null
                 },
-                horse_2: {
+                {
                     name: "Yüz Numaralı Adam",
                     color: "red",
+                    road: null
                 },
-                horse_3: {
+                {
                     name: "İnek Şaban",
                     color: "blueviolet",
+                    road: null
                 },
-                horse_4: {
+                {
                     name: "Kılıbık",
                     color: "yellow",
+                    road: null
                 },
-                horse_5: {
+                {
                     name: "Orta Direk Şaban",
                     color: "green",
+                    road: null
                 },
-                horse_6: {
+                {
                     name: "Bekçiler Kralı",
                     color: "fuchsia",
+                    road: null
                 },
-                horse_7: {
+                {
                     name: "Üç Kağıtçı",
                     color: "purple",
+                    road: null
                 },
-                horse_8: {
+                {
                     name: "Tosun Paşa",
                     color: "olive",
+                    road: null
                 },
-            }
+            ]
+        }
+    },
+    getters: {
+        updateRoad: (state) => {
+            return state.name
         }
     }
 })

@@ -1,15 +1,14 @@
 <script setup>
 import { ref, watch } from "vue";
+import { useHorsesStore } from "../../stores/horses";
 
 const props = defineProps(["horseColor", "startRaceToggle"]);
-const emit = defineEmits([
-  "update:btnName",
-  "update:hiddenButton",
-  "update:road",
-]);
+const emit = defineEmits(["update:btnName", "update:hiddenButton"]);
 
 const start = ref(0);
 const speed = ref(Math.floor(Math.random() * 22) + 20);
+
+const horses = useHorsesStore();
 
 const speedHandler = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -42,14 +41,16 @@ watch(
   }
 );
 
-watch(
-  () => start.value,
-  () => {
-    if (start.value < 100) {
-      emit("update:road", parseInt(100 - start.value));
-    }
-  }
-);
+console.log(props.horseColor.color.name);
+
+// watch(
+//   () => start.value,
+//   () => {
+//     if (start.value < 100) {
+//       horses.road = 100 - start.value;
+//     }
+//   }
+// );
 </script>
 
 <template>

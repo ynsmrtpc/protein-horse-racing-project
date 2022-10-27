@@ -9,7 +9,6 @@ const startRaceToggle = ref(false);
 const baslatBtn = ref("BAŞLAT");
 const hiddenButton = ref(true);
 const showCounter = ref(0);
-const road = ref(0);
 
 const horses = useHorsesStore();
 
@@ -44,7 +43,6 @@ const startRace = () => {
           :startRaceToggle="startRaceToggle"
           v-model:btnName="baslatBtn"
           v-model:hiddenButton="hiddenButton"
-          v-model:road="road"
         ></Horse>
       </template>
       <button v-if="hiddenButton" class="startButton" @click="startRace">
@@ -52,7 +50,6 @@ const startRace = () => {
       </button>
     </div>
   </div>
-  {{ road }}
 </template>
 
 <style scoped lang="scss">
