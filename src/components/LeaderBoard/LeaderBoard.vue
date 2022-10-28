@@ -1,5 +1,19 @@
 <script setup>
+import { ref, watch } from "vue";
+import { useHorsesStore } from "../../stores/horses";
+
 const props = defineProps(["horseName"]);
+const horses = useHorsesStore();
+const horsesSort = ref([]);
+
+// watch(
+//   () => horses.horses,
+//   () => {
+//     horses.horses.forEach((el) => horsesSort.value.push(el.road));
+//   }
+// );
+
+// console.log(horsesSort.value);
 </script>
 
 <template>

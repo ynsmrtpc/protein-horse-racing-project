@@ -9,14 +9,13 @@ const start = ref(0);
 const speed = ref(Math.floor(Math.random() * 22) + 20);
 
 const horses = useHorsesStore();
-
 const speedHandler = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 const startHandler = () => {
   const timer = setInterval(() => {
-    start.value += 0.1;
+    start.value += 0.5;
     if (start.value >= 100) {
       clearInterval(timer);
     }
@@ -41,16 +40,18 @@ watch(
   }
 );
 
-console.log(props.horseColor.color.name);
-
-// watch(
-//   () => start.value,
-//   () => {
-//     if (start.value < 100) {
-//       horses.road = 100 - start.value;
-//     }
-//   }
-// );
+watch(
+  () => start.value,
+  () => {
+    if (start.value < 100) {
+      horses.horses.forEach((horse) => {
+        if (horse.color === props.horseColor.color.color) {
+          horse.road = 100 - start.value;
+        }
+      });
+    }
+  }
+);
 </script>
 
 <template>

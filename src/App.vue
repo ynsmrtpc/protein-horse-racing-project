@@ -11,6 +11,7 @@ const hiddenButton = ref(true);
 const showCounter = ref(0);
 
 const horses = useHorsesStore();
+// console.log(horses.horses[0].road);
 
 const startRace = () => {
   showCounter.value = 5;
@@ -30,6 +31,10 @@ const startRace = () => {
 </script>
 
 <template>
+  <pre>
+  {{ horses.horses }}
+
+  </pre>
   <h1 class="header">HORSE RACING</h1>
   <TimeCounter v-if="showCounter > 0"></TimeCounter>
   <div v-else class="wrapper">

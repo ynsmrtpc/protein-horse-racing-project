@@ -47,9 +47,4 @@ export const useHorsesStore = defineStore('horse', {
             ]
         }
     },
-    getters: {
-        updateRoad: (state) => {
-            return state.name
-        }
-    }
 })
