@@ -19,11 +19,12 @@ const speedHandler = (min, max) => {
 
 const startHandler = () => {
   const timer = setInterval(() => {
-    start.value += 0.1;
+    start.value += 0.5;
     if (start.value >= 100) {
       clearInterval(timer);
     }
-  }, (100 / speed.value) * 10); // (x = V.t)
+    console.log(speed.value);
+  }, 100 / (speed.value / 10)); // (x = V.t)
 };
 watch(
   () => start.value,
