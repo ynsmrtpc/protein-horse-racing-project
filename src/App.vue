@@ -1,18 +1,34 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { useHorsesStore } from "./stores/horses";
 import Horse from "./components/Horse/Horse.vue";
 import Scoreboard from "./components/LeaderBoard/LeaderBoard.vue";
 import TimeCounter from "./components/Counter/TimeCounter.vue";
+import RaceResult from "./components/RaceResults/RaceResult.vue";
+import { db } from "./firebase/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 const startRaceToggle = ref(false);
 const baslatBtn = ref("BAŞLAT");
 const hiddenButton = ref(true);
 const showCounter = ref(0);
 const horseColor = ref([]);
+const saveDatabase = ref(false);
 
 const horses = useHorsesStore();
 horses.horses.forEach((horse) => horseColor.value.push(horse.color));
+
+const addDatabase = async () => {
+  try {
+    const docRef = await addDoc(collection(db, "results"), {
+      horses: horses.horses.map((horse) => horse.name),
+      date: new Date().getTime(),
+    });
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+};
 
 const startRace = () => {
   showCounter.value = 5;
@@ -28,34 +44,46 @@ const startRace = () => {
     showCounter.value = 0;
   }, 5000);
   startRaceToggle.value = false;
+  saveDatabase.value = false;
 };
+
+watch(
+  () => saveDatabase.value,
+  () => {
+    if (saveDatabase.value) {
+      addDatabase();
+    }
+  }
+);
 </script>
 
 <template>
   <h1 class="header">HORSE RACING</h1>
-
   <TimeCounter v-if="showCounter > 0"></TimeCounter>
+  <template v-else>
+    <div class="wrapper">
+      <div class="scoreboard">
+        <Scoreboard :horseName="horses.horses"></Scoreboard>
+      </div>
 
-  <div v-else class="wrapper">
-    <div class="scoreboard">
-      <Scoreboard :horseName="horses.horses"></Scoreboard>
+      <div class="road">
+        <template v-for="color in horseColor" :key="color">
+          <Horse
+            :horseColor="{ color }"
+            :startRaceToggle="startRaceToggle"
+            v-model:btnName="baslatBtn"
+            v-model:hiddenButton="hiddenButton"
+            v-model:saveDatabase="saveDatabase"
+          ></Horse>
+        </template>
+
+        <button v-if="hiddenButton" class="startButton" @click="startRace">
+          {{ baslatBtn }}
+        </button>
+      </div>
     </div>
-
-    <div class="road">
-      <template v-for="color in horseColor" :key="color">
-        <Horse
-          :horseColor="{ color }"
-          :startRaceToggle="startRaceToggle"
-          v-model:btnName="baslatBtn"
-          v-model:hiddenButton="hiddenButton"
-        ></Horse>
-      </template>
-
-      <button v-if="hiddenButton" class="startButton" @click="startRace">
-        {{ baslatBtn }}
-      </button>
-    </div>
-  </div>
+    <RaceResult></RaceResult>
+  </template>
 </template>
 
 <style scoped lang="scss">

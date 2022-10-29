@@ -3,7 +3,11 @@ import { ref, watch } from "vue";
 import { useHorsesStore } from "../../stores/horses";
 
 const props = defineProps(["horseColor", "startRaceToggle"]);
-const emit = defineEmits(["update:btnName", "update:hiddenButton"]);
+const emit = defineEmits([
+  "update:btnName",
+  "update:hiddenButton",
+  "update:saveDatabase",
+]);
 
 const start = ref(0);
 const speed = ref(0);
@@ -33,6 +37,7 @@ watch(
           clearInterval(randomSpeed);
           emit("update:hiddenButton", true);
           emit("update:btnName", "YENİDEN BAŞLAT");
+          emit("update:saveDatabase", true);
         }
       }, 3000);
       startHandler();
@@ -43,7 +48,7 @@ watch(
 watch(
   () => start.value,
   () => {
-    if (start.value <= 100) {
+    if (start.value < 100) {
       horses.horses.forEach((horse) => {
         if (horse.color === props.horseColor.color) {
           horse.road = 100 - start.value;
