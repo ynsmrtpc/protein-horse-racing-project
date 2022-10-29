@@ -24,9 +24,9 @@ const addDatabase = async () => {
       horses: horses.horses.map((horse) => horse.name),
       date: new Date().getTime(),
     });
-    console.log("Document written with ID: ", docRef.id);
+    console.log("Race information saved! Race ID:", docRef.id);
   } catch (e) {
-    console.error("Error adding document: ", e);
+    console.error("ERROR -->: ", e);
   }
 };
 
@@ -76,11 +76,12 @@ watch(
             v-model:saveDatabase="saveDatabase"
           ></Horse>
         </template>
+
+        <button v-if="hiddenButton" class="startButton" @click="startRace">
+          {{ baslatBtn }}
+        </button>
       </div>
     </div>
-    <button v-if="hiddenButton" class="startButton" @click="startRace">
-      {{ baslatBtn }}
-    </button>
     <RaceResult></RaceResult>
   </template>
 </template>
@@ -124,13 +125,13 @@ watch(
 }
 
 .startButton {
-  padding: 0.6rem 7rem;
+  padding: 0.6rem 1.2rem;
   background-color: #e0a75c;
   color: #fafafa;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  margin: 0 1.5rem;
+  margin: 1.5rem;
   &:active {
     border: 1px solid #fafafa;
     outline: none;
