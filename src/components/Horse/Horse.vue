@@ -25,7 +25,6 @@ const startHandler = () => {
     }
   }, (100 / speed.value) * 10); // (x = V.t)
 };
-
 watch(
   () => start.value,
   () => {

@@ -23,6 +23,13 @@ body {
       width: 100% !important;
     }
   }
+  .road {
+    width: calc(95% - 35px) !important;
+
+    &__end {
+      width: 35px !important;
+    }
+  }
 
   .startButton {
     width: 100%;
