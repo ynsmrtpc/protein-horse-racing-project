@@ -1,17 +1,18 @@
 <script setup>
 import { ref } from "vue";
-import Horse from "./components/Horse/Horse.vue";
-import Skorboard from "./components/LeaderBoard/LeaderBoard.vue";
 import { useHorsesStore } from "./stores/horses";
+import Horse from "./components/Horse/Horse.vue";
+import Scoreboard from "./components/LeaderBoard/LeaderBoard.vue";
 import TimeCounter from "./components/Counter/TimeCounter.vue";
 
 const startRaceToggle = ref(false);
 const baslatBtn = ref("BAŞLAT");
 const hiddenButton = ref(true);
 const showCounter = ref(0);
+const horseColor = ref([]);
 
 const horses = useHorsesStore();
-// console.log(horses.horses[0].road);
+horses.horses.forEach((horse) => horseColor.value.push(horse.color));
 
 const startRace = () => {
   showCounter.value = 5;
@@ -32,13 +33,16 @@ const startRace = () => {
 
 <template>
   <h1 class="header">HORSE RACING</h1>
+
   <TimeCounter v-if="showCounter > 0"></TimeCounter>
+
   <div v-else class="wrapper">
     <div class="scoreboard">
-      <Skorboard :horseName="horses.horses"></Skorboard>
+      <Scoreboard :horseName="horses.horses"></Scoreboard>
     </div>
+
     <div class="road">
-      <template v-for="color in horses.horses" :key="color">
+      <template v-for="color in horseColor" :key="color">
         <Horse
           :horseColor="{ color }"
           :startRaceToggle="startRaceToggle"
@@ -46,6 +50,7 @@ const startRace = () => {
           v-model:hiddenButton="hiddenButton"
         ></Horse>
       </template>
+
       <button v-if="hiddenButton" class="startButton" @click="startRace">
         {{ baslatBtn }}
       </button>

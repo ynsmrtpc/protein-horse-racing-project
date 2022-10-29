@@ -29,7 +29,7 @@ watch(
       speed.value = Math.floor(Math.random() * 22) + 20;
       const randomSpeed = setInterval(() => {
         speed.value = speedHandler(20, 40);
-        if (start.value >= 100) {
+        if (start.value === 100) {
           clearInterval(randomSpeed);
           emit("update:hiddenButton", true);
           emit("update:btnName", "YENİDEN BAŞLAT");
@@ -43,9 +43,9 @@ watch(
 watch(
   () => start.value,
   () => {
-    if (start.value < 100) {
+    if (start.value <= 100) {
       horses.horses.forEach((horse) => {
-        if (horse.color === props.horseColor.color.color) {
+        if (horse.color === props.horseColor.color) {
           horse.road = 100 - start.value;
         }
       });
@@ -59,7 +59,7 @@ watch(
     <div class="horse" :style="{ left: start + '%' }">
       <div
         class="horse__svg"
-        :style="{ backgroundColor: props.horseColor.color.color }"
+        :style="{ backgroundColor: props.horseColor.color }"
       ></div>
 
       <small class="horse__speed">{{ speed }}</small>
