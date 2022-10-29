@@ -44,7 +44,14 @@ export const useHorsesStore = defineStore('horse', {
                     color: "olive",
                     road: null
                 },
-            ]
+            ],
+
         }
     },
+    getters: {
+        roadInfo: (state) => {
+            let sortedHorses = state.horses.sort((h1, h2) => (h1.road > h2.road) ? 1 : (h1.road < h2.road) ? -1 : 0)
+            return sortedHorses
+        }
+    }
 })

@@ -31,10 +31,6 @@ const startRace = () => {
 </script>
 
 <template>
-  <pre>
-  {{ horses.horses }}
-
-  </pre>
   <h1 class="header">HORSE RACING</h1>
   <TimeCounter v-if="showCounter > 0"></TimeCounter>
   <div v-else class="wrapper">
@@ -42,7 +38,7 @@ const startRace = () => {
       <Skorboard :horseName="horses.horses"></Skorboard>
     </div>
     <div class="road">
-      <template v-for="color in horses.horses">
+      <template v-for="color in horses.horses" :key="color">
         <Horse
           :horseColor="{ color }"
           :startRaceToggle="startRaceToggle"

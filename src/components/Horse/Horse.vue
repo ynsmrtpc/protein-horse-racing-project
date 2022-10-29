@@ -6,7 +6,7 @@ const props = defineProps(["horseColor", "startRaceToggle"]);
 const emit = defineEmits(["update:btnName", "update:hiddenButton"]);
 
 const start = ref(0);
-const speed = ref(Math.floor(Math.random() * 22) + 20);
+const speed = ref(0);
 
 const horses = useHorsesStore();
 const speedHandler = (min, max) => {
@@ -26,13 +26,13 @@ watch(
   () => props.startRaceToggle,
   () => {
     if (props.startRaceToggle) {
+      speed.value = Math.floor(Math.random() * 22) + 20;
       const randomSpeed = setInterval(() => {
         speed.value = speedHandler(20, 40);
         if (start.value >= 100) {
           clearInterval(randomSpeed);
           emit("update:hiddenButton", true);
           emit("update:btnName", "YENİDEN BAŞLAT");
-          start.value = 0;
         }
       }, 3000);
       startHandler();

@@ -1,29 +1,23 @@
 <script setup>
-import { ref, watch } from "vue";
 import { useHorsesStore } from "../../stores/horses";
 
 const props = defineProps(["horseName"]);
 const horses = useHorsesStore();
-const horsesSort = ref([]);
-
-// watch(
-//   () => horses.horses,
-//   () => {
-//     horses.horses.forEach((el) => horsesSort.value.push(el.road));
-//   }
-// );
-
-// console.log(horsesSort.value);
 </script>
 
 <template>
   <div class="scoreboard">
-    <ul v-for="horse in props.horseName" class="scoreboard__list">
-      <div :style="{ backgroundColor: horse.color }" class="horse_icon"></div>
-      <li :style="{ color: horse.color }" class="scoreboard__name">
+    <ul class="scoreboard__list">
+      <li
+        v-for="(horse, index) in horses.roadInfo"
+        :style="{ color: horse.color }"
+        class="scoreboard__name"
+        :key="horse.name"
+      >
+        <div :style="{ backgroundColor: horse.color }" class="horse_icon"></div>
         {{ horse.name }}
+        <strong class="sort">#{{ index + 1 }}</strong>
       </li>
-      <strong>#</strong>
     </ul>
   </div>
 </template>
@@ -32,13 +26,14 @@ const horsesSort = ref([]);
 .scoreboard {
   margin: 0.6rem;
   color: #6c7e6c;
-
-  &__list {
-    border: 0.1rem solid #f0f8ff;
+  &__name {
     display: flex;
     justify-content: space-between;
+    border: 0.1rem solid #f0f8ff;
     list-style: none;
     padding: 0.6rem;
+  }
+  &__list {
     width: 25vw;
   }
 }
@@ -46,5 +41,9 @@ const horsesSort = ref([]);
   -webkit-mask: url(../../assets/horse.svg) no-repeat center;
   mask: url(../../assets/horse.svg) no-repeat center;
   padding: 15px;
+}
+
+.sort {
+  color: #6c7e6c;
 }
 </style>
