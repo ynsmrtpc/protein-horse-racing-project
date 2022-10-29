@@ -7,3 +7,24 @@
 body {
   background: rgba(203, 196, 208, 0.5);
 }
+@media screen and (max-width: 600px) {
+  .wrapper {
+    flex-flow: row wrap;
+  }
+  .scoreboard {
+    flex-direction: row;
+    display: flex;
+    flex-direction: row;
+    &__name {
+      display: flex;
+      flex-direction: row;
+    }
+    &__list {
+      width: 100% !important;
+    }
+  }
+
+  .startButton {
+    width: 100%;
+  }
+}

@@ -19,13 +19,25 @@ const speedHandler = (min, max) => {
 
 const startHandler = () => {
   const timer = setInterval(() => {
-    start.value += 0.5;
+    start.value += 0.1;
     if (start.value >= 100) {
       clearInterval(timer);
     }
-  }, 100 - speed.value);
+  }, (100 / speed.value) * 10); // (x = V.t)
 };
 
+watch(
+  () => start.value,
+  () => {
+    if (start.value < 100) {
+      horses.horses.forEach((horse) => {
+        if (horse.color === props.horseColor.color) {
+          horse.road = 100 - start.value;
+        }
+      });
+    }
+  }
+);
 watch(
   () => props.startRaceToggle,
   () => {
@@ -41,19 +53,6 @@ watch(
         }
       }, 3000);
       startHandler();
-    }
-  }
-);
-
-watch(
-  () => start.value,
-  () => {
-    if (start.value < 100) {
-      horses.horses.forEach((horse) => {
-        if (horse.color === props.horseColor.color) {
-          horse.road = 100 - start.value;
-        }
-      });
     }
   }
 );
