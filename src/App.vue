@@ -76,12 +76,11 @@ watch(
             v-model:saveDatabase="saveDatabase"
           ></Horse>
         </template>
-
-        <button v-if="hiddenButton" class="startButton" @click="startRace">
-          {{ baslatBtn }}
-        </button>
       </div>
     </div>
+    <button v-if="hiddenButton" class="startButton" @click="startRace">
+      {{ baslatBtn }}
+    </button>
     <RaceResult></RaceResult>
   </template>
 </template>
@@ -125,13 +124,13 @@ watch(
 }
 
 .startButton {
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 7rem;
   background-color: #e0a75c;
   color: #fafafa;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  margin: 1.5rem;
+  margin: 0 1.5rem;
   &:active {
     border: 1px solid #fafafa;
     outline: none;

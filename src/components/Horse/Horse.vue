@@ -44,7 +44,7 @@ watch(
       speed.value = Math.floor(Math.random() * 22) + 20;
       const randomSpeed = setInterval(() => {
         speed.value = speedHandler(20, 40);
-        if (start.value === 100) {
+        if (start.value >= 100) {
           clearInterval(randomSpeed);
           emit("update:hiddenButton", true);
           emit("update:btnName", "YENİDEN BAŞLAT");
