@@ -9,7 +9,7 @@ import { db } from "./firebase/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
 const startRaceToggle = ref(false);
-const baslatBtn = ref("BAŞLAT");
+const startButton = ref("BAŞLAT");
 const hiddenButton = ref(true);
 const showCounter = ref(0);
 const horseColor = ref([]);
@@ -71,7 +71,7 @@ watch(
           <Horse
             :horseColor="{ color }"
             :startRaceToggle="startRaceToggle"
-            v-model:btnName="baslatBtn"
+            v-model:buttonName="startButton"
             v-model:hiddenButton="hiddenButton"
             v-model:saveDatabase="saveDatabase"
           ></Horse>
@@ -79,7 +79,7 @@ watch(
       </div>
     </div>
     <button v-if="hiddenButton" class="startButton" @click="startRace">
-      {{ baslatBtn }}
+      {{ startButton }}
     </button>
     <RaceResult></RaceResult>
   </template>

@@ -4,7 +4,7 @@ import { useHorsesStore } from "../../stores/horses";
 
 const props = defineProps(["horseColor", "startRaceToggle"]);
 const emit = defineEmits([
-  "update:btnName",
+  "update:buttonName",
   "update:hiddenButton",
   "update:saveDatabase",
 ]);
@@ -48,7 +48,7 @@ watch(
         if (start.value >= 100) {
           clearInterval(randomSpeed);
           emit("update:hiddenButton", true);
-          emit("update:btnName", "YENİDEN BAŞLAT");
+          emit("update:buttonName", "YENİDEN BAŞLAT");
           emit("update:saveDatabase", true);
         }
       }, 3000);
